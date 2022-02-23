@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { theme } from '../../styles/theme';
 
 export const Title = styled.h1`
   text-align: center;
@@ -7,7 +8,6 @@ export const Title = styled.h1`
 `;
 
 export const Subtitle = styled.h2`
-  /* text-align: center; */
   font: ${({ theme }) => theme.typography.subtitle};
-  color: ${({ theme }) => theme.colors.text.light};
+  color: ${({ color = theme.colors.text.normal }) => color};
 `;

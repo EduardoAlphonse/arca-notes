@@ -35,7 +35,7 @@ export function Login() {
             Arca Notes
           </Title>
 
-          <Subtitle>
+          <Subtitle color={theme.colors.text.light}>
             Para continuar,
             <br />
             insira seu ID e senha

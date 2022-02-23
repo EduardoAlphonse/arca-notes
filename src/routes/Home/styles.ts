@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   padding: 1.5rem 1.5rem 0;
   gap: 2rem;
+  height: 100%;
 
   overflow-y: hidden;
 `;
@@ -64,4 +65,9 @@ export const Value = styled.span``;
 
 export const Separator = styled.div``;
 
-export const SummaryFooter = styled.div``;
+export const SummaryFooter = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+`;
