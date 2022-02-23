@@ -5,6 +5,8 @@ declare module 'styled-components' {
     colors: {
       primary: {
         normal: string;
+        medium: string;
+        dark: string;
       };
 
       text: {
@@ -21,6 +23,21 @@ declare module 'styled-components' {
         white: string;
         divider: string;
       };
+    };
+
+    typography: {
+      title: string;
+      subtitle: string;
+      button: string;
+      text: string;
+      textMedium: string;
+      textSmall: string;
+      textSmallMedium: string;
+      textSmallest: string;
+    };
+
+    shapes: {
+      borderRadius: string;
     };
   }
 }

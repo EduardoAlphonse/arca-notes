@@ -1,13 +1,15 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-
 import { AppContainer } from './AppStyles';
 import { Router } from './routes/app.routes';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './styles/theme';
 
 function App() {
   return (
-    <AppContainer>
-      <Router />
-    </AppContainer>
+    <ThemeProvider theme={theme}>
+      <AppContainer>
+        <Router />
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 
