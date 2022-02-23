@@ -18,7 +18,6 @@ export const FormContainer = styled.div`
   flex: 4;
   justify-content: center;
   align-items: center;
-  background: ${({ theme }) => theme.colors.background.light};
 `;
 
 export const Form = styled.form`
@@ -26,16 +25,8 @@ export const Form = styled.form`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-`;
 
-export const FormTitle = styled.h1`
-  text-align: center;
-  font: ${({ theme }) => theme.typography.title};
-  color: ${({ theme }) => theme.colors.text.normal};
-`;
-
-export const FormSubtitle = styled.h2`
-  text-align: center;
-  font: ${({ theme }) => theme.typography.subtitle};
-  color: ${({ theme }) => theme.colors.text.light};
+  h2 {
+    text-align: center;
+  }
 `;

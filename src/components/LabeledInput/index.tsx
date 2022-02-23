@@ -1,16 +1,17 @@
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, CSSProperties } from 'react';
 
 import { Container, Label } from './styles';
 
 type LabeledInputProps = {
-  label: string;
+  label?: string;
   inputAttrs: InputHTMLAttributes<HTMLInputElement>;
+  style?: CSSProperties;
 };
 
-export function LabeledInput({ label, inputAttrs }: LabeledInputProps) {
+export function LabeledInput({ label, inputAttrs, style }: LabeledInputProps) {
   return (
-    <Container>
-      <Label>{label}</Label>
+    <Container style={style}>
+      {label && <Label>{label}</Label>}
       <input {...inputAttrs} />
     </Container>
   );
