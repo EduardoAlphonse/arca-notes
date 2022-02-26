@@ -27,12 +27,13 @@ const StyledClient = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   min-width: 30%;
-  max-width: 48%;
 
   padding: 0.75rem 1.125rem;
 
   background-color: ${({ theme }) => theme.colors.common.white};
   border-radius: ${({ theme }) => theme.shapes.borderRadius};
+
+  cursor: pointer;
 
   .client-details {
     font: ${({ theme }) => theme.typography.textSmall};
