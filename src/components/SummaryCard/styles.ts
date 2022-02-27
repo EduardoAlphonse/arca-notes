@@ -1,22 +1,6 @@
 import styled from 'styled-components';
 
-export function SummaryCard() {
-  return (
-    <Container>
-      <Data>
-        <Text>Vendas</Text>
-        <Text>48</Text>
-      </Data>
-      <Separator />
-      <Data>
-        <Text>Total</Text>
-        <Text>R$ 8.548,05</Text>
-      </Data>
-    </Container>
-  );
-}
-
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   padding: 1rem 0.5rem;
   align-items: center;
@@ -25,17 +9,17 @@ const Container = styled.div`
   border-radius: 6px;
 `;
 
-const Data = styled.div`
+export const Data = styled.div`
   flex: 1;
 `;
 
-const Text = styled.p`
+export const Text = styled.p`
   font: ${({ theme }) => theme.typography.subtitle};
   color: ${({ theme }) => theme.colors.common.white};
   text-align: center;
 `;
 
-const Separator = styled.div`
+export const Separator = styled.div`
   width: 1px;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.common.white};

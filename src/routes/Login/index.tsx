@@ -18,7 +18,7 @@ export function Login() {
   function handleLogin(event: FormEvent) {
     event.preventDefault();
 
-    navigate('/app');
+    navigate('app');
   }
 
   return (

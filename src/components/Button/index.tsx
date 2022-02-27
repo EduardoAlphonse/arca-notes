@@ -8,6 +8,7 @@ import { theme } from '../../styles/theme';
 type ButtonProps = {
   icon?: 'arrowRight' | 'plus';
   title: string;
+  buttonStyle?: 'primary' | 'secondary';
   buttonAttrs: ButtonHTMLAttributes<HTMLButtonElement>;
 };
 
@@ -16,9 +17,14 @@ const icons = {
   plus: <FiPlus size="1.5rem" color={theme.colors.common.white} />,
 };
 
-export function Button({ icon, title, buttonAttrs }: ButtonProps) {
+export function Button({
+  icon,
+  title,
+  buttonStyle = 'primary',
+  buttonAttrs,
+}: ButtonProps) {
   return (
-    <Container {...buttonAttrs}>
+    <Container {...buttonAttrs} buttonStyle={buttonStyle}>
       {icon && <IconContainer>{icons[icon]}</IconContainer>}
       <span>{title}</span>
     </Container>

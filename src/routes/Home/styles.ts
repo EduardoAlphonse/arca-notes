@@ -6,33 +6,25 @@ export const Container = styled.div`
   padding: 1.5rem 1.5rem 0;
   gap: 2rem;
   flex: 1;
-  /* background-color: rgba(255, 0, 0, 0.2); */
-
-  /* border: 2px solid green; */
-
-  /* overflow-y: hidden; */
 `;
 
-export const Header = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+// export const Header = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: 0.75rem;
 
-  /* border: 2px solid red; */
-`;
+// `;
 
-export const Avatar = styled.img`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 1.5rem;
-`;
+// export const Avatar = styled.img`
+//   width: 3rem;
+//   height: 3rem;
+//   border-radius: 1.5rem;
+// `;
 
 export const Content = styled.div`
   display: flex;
   height: 100%;
   gap: 1.5rem;
-
-  /* border: 2px solid brown; */
 `;
 
 export const Clients = styled.div`
@@ -46,6 +38,7 @@ export const ClientsHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-right: 6px;
 `;
 
 export const ClientList = styled.div`
@@ -54,8 +47,6 @@ export const ClientList = styled.div`
   flex-wrap: wrap;
   gap: 1.5rem;
   padding: 0 0 1rem;
-
-  align-items: flex-start;
 
   overflow-y: scroll;
 `;

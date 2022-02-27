@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiDollarSign } from 'react-icons/fi';
 
@@ -5,23 +6,34 @@ import { Subtitle } from '../../../components/CommonComponents';
 
 import { theme } from '../../../styles/theme';
 
-export function Client() {
+export type ClientData = {
+  id: string;
+  name: string;
+  phone: string;
+  address: string;
+};
+
+type ClientProps = {
+  data: ClientData;
+};
+
+export function Client({ data: { id, name, phone, address } }: ClientProps) {
   return (
-    <StyledClient>
-      <Subtitle>William Santos</Subtitle>
+    <StyledClient to={`client/${id}`}>
+      <Subtitle>{name}</Subtitle>
       <div className="client-details">
-        <p>(32) 9 8888-7777</p>
-        <p>Rua. 7 de Maio 487, Jardins Eldorado</p>
+        <p>{phone}</p>
+        <p>{address}</p>
       </div>
       <div className="client-total-debt">
         <FiDollarSign size="1.5rem" color={theme.colors.text.normal} />
-        <span>R$ 850,49</span>
+        <span>R$ 850,49 (absoluto)</span>
       </div>
     </StyledClient>
   );
 }
 
-const StyledClient = styled.div`
+const StyledClient = styled(Link)`
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -33,6 +45,7 @@ const StyledClient = styled.div`
   background-color: ${({ theme }) => theme.colors.common.white};
   border-radius: ${({ theme }) => theme.shapes.borderRadius};
 
+  text-decoration: none;
   cursor: pointer;
 
   .client-details {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Button } from '../../components/Button';
+import { useParams } from 'react-router-dom';
+
 import {
   Container,
   Content,
@@ -8,34 +9,38 @@ import {
   ClientList,
   Summary,
   SummaryFooter,
-} from './styles';
+} from '../Home/styles';
 
 import { Title } from '../../components/CommonComponents';
 import { LabeledInput } from '../../components/LabeledInput';
 import { SummaryCard } from '../../components/SummaryCard/SummaryCard';
-import { Client } from './components/Client';
+import { Purchase } from './components/Purchase';
 import { NewClientForm } from '../../components/NewClientForm';
+import { Button } from '../../components/Button';
 
-import { getClients } from '../../database';
+import { getPurchases } from '../../database';
 
-export function Home() {
-  const [isNewClientModalVisible, setIsNewClientModalVisible] = useState(false);
-  const clients = getClients();
+export function Client() {
+  const [isNewSaleModalOpen, setIsNewSaleModalOpen] = useState(false);
 
-  function handleShowNewClientModal() {
-    setIsNewClientModalVisible(true);
+  const params = useParams<{ clientId: string }>();
+
+  const purchases = getPurchases(params.clientId ?? '');
+
+  function handleShowNewSaleModal() {
+    setIsNewSaleModalOpen(true);
   }
 
-  function handleCloseNewClientModal() {
-    setIsNewClientModalVisible(false);
+  function handleCloseNewSaleModal() {
+    setIsNewSaleModalOpen(false);
   }
 
   return (
     <Container>
       {/* <Header>
-        <Subtitle>Bom dia/tarde/noite, Fulano!</Subtitle>
-        <Avatar src={avatar} />
-      </Header> */}
+    <Subtitle>Bom dia/tarde/noite, Fulano!</Subtitle>
+    <Avatar src={avatar} />
+  </Header> */}
 
       <Content>
         <Clients>
@@ -48,8 +53,8 @@ export function Home() {
           </ClientsHeader>
 
           <ClientList>
-            {clients.map((clientData) => (
-              <Client key={clientData.id} data={clientData} />
+            {purchases.map((purchaseData) => (
+              <Purchase key={purchaseData.id} data={purchaseData} />
             ))}
           </ClientList>
         </Clients>
@@ -63,15 +68,15 @@ export function Home() {
             <Button
               title="Cadastrar novo cliente"
               icon="plus"
-              buttonAttrs={{ onClick: handleShowNewClientModal }}
+              buttonAttrs={{ onClick: handleShowNewSaleModal }}
             />
           </SummaryFooter>
         </Summary>
       </Content>
 
       <NewClientForm
-        isVisible={isNewClientModalVisible}
-        closeModal={handleCloseNewClientModal}
+        isVisible={isNewSaleModalOpen}
+        closeModal={handleCloseNewSaleModal}
       />
     </Container>
   );
