@@ -1,14 +1,22 @@
 import styled from 'styled-components';
 
-export const Container = styled.button`
+export const Container = styled.button<{
+  buttonStyle: 'primary' | 'secondary';
+}>`
   display: flex;
   align-items: center;
   min-width: 14rem;
+  min-height: 44px;
 
-  background-color: ${({ theme }) => theme.colors.primary.normal};
+  background-color: ${({ theme, buttonStyle }) =>
+    buttonStyle === 'primary' ? theme.colors.primary.normal : 'transparent'};
 
   border-radius: ${({ theme }) => theme.shapes.borderRadius};
-  border: none;
+  border: 2px solid
+    ${({ theme, buttonStyle }) =>
+      buttonStyle === 'primary'
+        ? theme.colors.primary.normal
+        : theme.colors.text.normal};
 
   transition: 300ms;
   cursor: pointer;
@@ -16,16 +24,21 @@ export const Container = styled.button`
   span {
     flex: 1;
     font: ${({ theme }) => theme.typography.button};
-    color: ${({ theme }) => theme.colors.common.white};
+    color: ${({ theme, buttonStyle }) =>
+      buttonStyle === 'primary'
+        ? theme.colors.common.white
+        : theme.colors.primary.normal};
     text-align: center;
   }
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary.medium};
+    background-color: ${({ theme, buttonStyle }) =>
+      buttonStyle === 'primary' ? theme.colors.primary.medium : 'transparent'};
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.colors.primary.dark};
+    background-color: ${({ theme, buttonStyle }) =>
+      buttonStyle === 'primary' ? theme.colors.primary.dark : 'transparent'};
   }
 `;
 

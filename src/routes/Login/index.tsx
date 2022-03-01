@@ -1,22 +1,26 @@
+import { FormEvent } from 'react';
 import { FiLock } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
-import {
-  Container,
-  SideImageWrapper,
-  FormContainer,
-  Form,
-  FormTitle,
-  FormSubtitle,
-} from './styles';
+import { Container, SideImageWrapper, FormContainer, Form } from './styles';
 
 import { LabeledInput } from '../../components/LabeledInput';
 import { Button } from '../../components/Button';
+import { Title, Subtitle } from '../../components/CommonComponents';
 
 import Logo from '../../assets/logo.svg?component';
 
 import { theme } from '../../styles/theme';
 
 export function Login() {
+  const navigate = useNavigate();
+
+  function handleLogin(event: FormEvent) {
+    event.preventDefault();
+
+    navigate('app');
+  }
+
   return (
     <Container>
       <SideImageWrapper>
@@ -24,18 +28,18 @@ export function Login() {
       </SideImageWrapper>
 
       <FormContainer>
-        <Form>
-          <FormTitle>
+        <Form onSubmit={handleLogin}>
+          <Title>
             Bem vindo ao
             <br />
             Arca Notes
-          </FormTitle>
+          </Title>
 
-          <FormSubtitle>
+          <Subtitle color={theme.colors.text.light}>
             Para continuar,
             <br />
             insira seu ID e senha
-          </FormSubtitle>
+          </Subtitle>
 
           <FiLock size="2.25rem" color={theme.colors.text.light} />
 
@@ -48,7 +52,13 @@ export function Login() {
             inputAttrs={{ type: 'password', placeholder: 'Sua senha' }}
           />
 
-          <Button title="Entrar" icon="arrowRight" onClick={() => {}} />
+          <Button
+            title="Entrar"
+            icon="arrowRight"
+            buttonAttrs={{
+              onClick: () => {},
+            }}
+          />
         </Form>
       </FormContainer>
     </Container>

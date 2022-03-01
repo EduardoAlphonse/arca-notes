@@ -9,9 +9,9 @@ export const Container = styled.label`
     border: 2px solid ${({ theme }) => theme.colors.common.white};
     border-radius: ${({ theme }) => theme.shapes.borderRadius};
 
-    text-align: center;
     font: ${({ theme }) => theme.typography.text};
     color: ${({ theme }) => theme.colors.text.normal};
+    text-align: center;
 
     outline: none;
     transition: 300ms;
