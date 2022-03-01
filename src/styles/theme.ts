@@ -28,7 +28,9 @@ const theme: DefaultTheme = {
     textMedium: '500 0.875rem Poppins',
     textSmall: '400 0.75rem Poppins',
     textSmallMedium: '500 0.75rem Poppins',
+    textSmallSemiBold: '600 0.75rem Poppins',
     textSmallest: '400 0.625rem Poppins',
+    textSmallestSemiBold: '600 0.625rem Poppins',
   },
 
   shapes: {

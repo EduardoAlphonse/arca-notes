@@ -39,10 +39,12 @@ export const ClientsHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-right: 6px;
+  height: 42px;
 `;
 
 export const ClientList = styled.div`
   display: flex;
+  place-content: start;
   flex: 1;
   flex-wrap: wrap;
   gap: 1.5rem;
@@ -61,6 +63,8 @@ export const Summary = styled.div`
 
   h1 {
     text-align: left;
+    line-height: 42px;
+    vertical-align: middle;
   }
 `;
 

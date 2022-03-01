@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+/* @media screen and (max-width: 1400px) { */
+/* html { */
+/* 14px */
+/* font-size: 87.5%; */
+
+/* 15px */
+/* font-size: 93.75%; */
+/* } */
+/* } */
+
 /* width */
 ::-webkit-scrollbar {
   width: 6px;

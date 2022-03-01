@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { theme } from '../../../styles/theme';
-
 export type PurchaseData = {
   id: string;
   clientId: string;
@@ -18,27 +16,25 @@ type PurchaseProps = {
   data: PurchaseData;
 };
 
-export function Purchase({ data: {} }: PurchaseProps) {
+export function Purchase({ data: { value, date, items } }: PurchaseProps) {
   return (
     <StyledPurchase>
       <Header>
-        <TotalValue>R$ 200,15</TotalValue>
-        <Date>30/01/2022</Date>
+        <TotalValue>R$ {value.toFixed(2)}</TotalValue>
+        <Date>{date}</Date>
       </Header>
 
       <ItemList>
-        <Item>
-          <Description>3 x Sachê Whiskas</Description>
-          <Value>
-            <MoneySign>R$</MoneySign> 8,25
-          </Value>
-        </Item>
-        <Item>
-          <Description>3 x Sachê Whiskas</Description>
-          <Value>
-            <MoneySign>R$</MoneySign> 8,25
-          </Value>
-        </Item>
+        {items.map((item) => (
+          <Item key={item.description}>
+            <Description>
+              {item.quantity} x {item.description}
+            </Description>
+            <Value>
+              <MoneySign>R$</MoneySign> {item.value.toFixed(2)}
+            </Value>
+          </Item>
+        ))}
       </ItemList>
     </StyledPurchase>
   );
@@ -46,10 +42,13 @@ export function Purchase({ data: {} }: PurchaseProps) {
 
 const StyledPurchase = styled.div`
   display: flex;
+  align-self: flex-start;
   flex: 1;
   flex-direction: column;
   gap: 1.5rem;
   min-width: 30%;
+
+  border-bottom: 1px solid ${({ theme }) => theme.colors.common.divider};
 
   padding: 1rem;
 
@@ -84,12 +83,23 @@ export const Item = styled.div`
 
   color: ${({ theme }) => theme.colors.text.normal};
   font: ${({ theme }) => theme.typography.textSmall};
+
+  padding: 0.25rem 0;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.common.divider};
+
+  &:last-child {
+    border: none;
+  }
 `;
 
 export const Description = styled.p``;
 
-export const Value = styled.span``;
+export const Value = styled.span`
+  min-width: 4rem;
+  text-align: right;
+  font: ${({ theme }) => theme.typography.textSmallSemiBold};
+`;
 
 export const MoneySign = styled.span`
-  font: ${({ theme }) => theme.typography.textSmallest};
+  font: ${({ theme }) => theme.typography.textSmallestSemiBold};
 `;

@@ -6,26 +6,29 @@ import {
   Content,
   Clients,
   ClientsHeader,
-  ClientList,
+  ClientList as PurchaseList,
   Summary,
   SummaryFooter,
 } from '../Home/styles';
 
 import { Title } from '../../components/CommonComponents';
-import { LabeledInput } from '../../components/LabeledInput';
-import { SummaryCard } from '../../components/SummaryCard/SummaryCard';
+import { SummaryCard } from '../../components/SummaryCard';
 import { Purchase } from './components/Purchase';
 import { NewClientForm } from '../../components/NewClientForm';
 import { Button } from '../../components/Button';
 
-import { getPurchases } from '../../database';
+import { getClient } from '../../database';
 
 export function Client() {
   const [isNewSaleModalOpen, setIsNewSaleModalOpen] = useState(false);
 
   const params = useParams<{ clientId: string }>();
 
-  const purchases = getPurchases(params.clientId ?? '');
+  const client = getClient(params.clientId ?? '');
+
+  const purchasesTotalValue = client.purchases
+    .map((purchase) => purchase.value)
+    .reduce((accumulator, actual) => accumulator + actual);
 
   function handleShowNewSaleModal() {
     setIsNewSaleModalOpen(true);
@@ -45,28 +48,27 @@ export function Client() {
       <Content>
         <Clients>
           <ClientsHeader>
-            <Title>Clientes</Title>
-            <LabeledInput
-              inputAttrs={{ placeholder: 'Procurar...' }}
-              style={{ maxWidth: '16rem', textAlign: 'left' }}
-            />
+            <Title>{client.name}</Title>
           </ClientsHeader>
 
-          <ClientList>
-            {purchases.map((purchaseData) => (
+          <PurchaseList>
+            {client.purchases.map((purchaseData) => (
               <Purchase key={purchaseData.id} data={purchaseData} />
             ))}
-          </ClientList>
+          </PurchaseList>
         </Clients>
 
         <Summary>
           <Title>Resumo</Title>
 
-          <SummaryCard />
+          <SummaryCard
+            sales={client.purchases.length}
+            total={purchasesTotalValue}
+          />
 
           <SummaryFooter>
             <Button
-              title="Cadastrar novo cliente"
+              title="Inserir nova compra"
               icon="plus"
               buttonAttrs={{ onClick: handleShowNewSaleModal }}
             />
