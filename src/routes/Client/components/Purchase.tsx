@@ -46,7 +46,7 @@ const StyledPurchase = styled.div`
   flex: 1;
   flex-direction: column;
   gap: 1.5rem;
-  min-width: 30%;
+  min-width: 13rem;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.common.divider};
 

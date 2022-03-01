@@ -37,7 +37,7 @@ const StyledClient = styled(Link)`
   align-self: flex-start;
   flex-direction: column;
   gap: 1.5rem;
-  min-width: 30%;
+  min-width: 13rem;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.common.divider};
 

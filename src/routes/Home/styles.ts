@@ -43,11 +43,11 @@ export const ClientsHeader = styled.div`
 `;
 
 export const ClientList = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.5rem;
   place-content: start;
   flex: 1;
-  flex-wrap: wrap;
-  gap: 1.5rem;
   padding: 0 0 1rem;
 
   overflow-y: scroll;
