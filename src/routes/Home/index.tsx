@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import { Button } from '../../components/Button';
 import {
   Container,
@@ -12,15 +12,29 @@ import {
 
 import { Title } from '../../components/CommonComponents';
 import { LabeledInput } from '../../components/LabeledInput';
-import { SummaryCard } from '../../components/SummaryCard/SummaryCard';
+import { SummaryCard } from '../../components/SummaryCard';
 import { Client } from './components/Client';
 import { NewClientForm } from '../../components/NewClientForm';
 
-import { getClients } from '../../database';
+import { ClientData } from './components/Client';
+import { getClients, getPurchases } from '../../database';
 
 export function Home() {
+  const [clients, setClients] = useState<ClientData[]>([]);
+  const [filteredClients, setFilteredClients] = useState<ClientData[]>([]);
   const [isNewClientModalVisible, setIsNewClientModalVisible] = useState(false);
-  const clients = getClients();
+
+  const purchases = getPurchases();
+
+  const purchasesTotalValue = purchases
+    .map((purchase) => purchase.value)
+    .reduce((accumulator, actual) => accumulator + actual);
+
+  useEffect(() => {
+    const clientData = getClients();
+    setClients(clientData);
+    setFilteredClients(clientData);
+  }, []);
 
   function handleShowNewClientModal() {
     setIsNewClientModalVisible(true);
@@ -28,6 +42,16 @@ export function Home() {
 
   function handleCloseNewClientModal() {
     setIsNewClientModalVisible(false);
+  }
+
+  function handleFilterClient(event: ChangeEvent<HTMLInputElement>) {
+    const filterText = event.target.value.toLowerCase();
+
+    const newFilteredClients = clients.filter((client) =>
+      client.name.toLowerCase().includes(filterText)
+    );
+
+    setFilteredClients(newFilteredClients);
   }
 
   return (
@@ -42,14 +66,17 @@ export function Home() {
           <ClientsHeader>
             <Title>Clientes</Title>
             <LabeledInput
-              inputAttrs={{ placeholder: 'Procurar...' }}
+              inputAttrs={{
+                placeholder: 'Procurar...',
+                onChange: handleFilterClient,
+              }}
               style={{ maxWidth: '16rem', textAlign: 'left' }}
             />
           </ClientsHeader>
 
           <ClientList>
-            {clients.map((clientData) => (
-              <Client key={clientData.id} data={clientData} />
+            {filteredClients.map((client) => (
+              <Client key={client.id} data={client} />
             ))}
           </ClientList>
         </Clients>
@@ -57,13 +84,16 @@ export function Home() {
         <Summary>
           <Title>Resumo</Title>
 
-          <SummaryCard />
+          <SummaryCard sales={purchases.length} total={purchasesTotalValue} />
 
           <SummaryFooter>
             <Button
               title="Cadastrar novo cliente"
               icon="plus"
-              buttonAttrs={{ onClick: handleShowNewClientModal }}
+              buttonAttrs={{
+                onClick: handleShowNewClientModal,
+                type: 'button',
+              }}
             />
           </SummaryFooter>
         </Summary>

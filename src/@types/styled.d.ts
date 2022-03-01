@@ -33,7 +33,9 @@ declare module 'styled-components' {
       textMedium: string;
       textSmall: string;
       textSmallMedium: string;
+      textSmallSemiBold: string;
       textSmallest: string;
+      textSmallestSemiBold: string;
     };
 
     shapes: {

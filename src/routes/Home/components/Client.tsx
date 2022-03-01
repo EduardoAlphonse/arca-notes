@@ -4,8 +4,6 @@ import { FiDollarSign } from 'react-icons/fi';
 
 import { Subtitle } from '../../../components/CommonComponents';
 
-import { theme } from '../../../styles/theme';
-
 export type ClientData = {
   id: string;
   name: string;
@@ -25,10 +23,10 @@ export function Client({ data: { id, name, phone, address } }: ClientProps) {
         <p>{phone}</p>
         <p>{address}</p>
       </div>
-      <div className="client-total-debt">
+      {/* <div className="client-total-debt">
         <FiDollarSign size="1.5rem" color={theme.colors.text.normal} />
         <span>R$ 850,49 (absoluto)</span>
-      </div>
+      </div> */}
     </StyledClient>
   );
 }
@@ -36,9 +34,12 @@ export function Client({ data: { id, name, phone, address } }: ClientProps) {
 const StyledClient = styled(Link)`
   display: flex;
   flex: 1;
+  align-self: flex-start;
   flex-direction: column;
   gap: 1.5rem;
-  min-width: 30%;
+  min-width: 13rem;
+
+  border-bottom: 1px solid ${({ theme }) => theme.colors.common.divider};
 
   padding: 0.75rem 1.125rem;
 
