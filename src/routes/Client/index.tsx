@@ -13,7 +13,7 @@ import {
 
 import { Title } from '../../components/CommonComponents';
 import { SummaryCard } from '../../components/SummaryCard';
-import { Purchase } from './components/Purchase';
+import { Sale } from './components/Purchase';
 import { NewClientForm } from '../../components/NewClientForm';
 import { Button } from '../../components/Button';
 
@@ -53,7 +53,7 @@ export function Client() {
 
           <PurchaseList>
             {client.purchases.map((purchaseData) => (
-              <Purchase key={purchaseData.id} data={purchaseData} />
+              <Sale key={purchaseData.id} data={purchaseData} />
             ))}
           </PurchaseList>
         </Clients>

@@ -8,6 +8,8 @@ import {
   FormOptions,
 } from './styles';
 
+import { saveNewClient } from '../../services/firebase/database';
+
 import { Subtitle } from '../CommonComponents';
 import { LabeledInput } from '../LabeledInput';
 import { Button } from '../Button';
@@ -21,6 +23,16 @@ export function NewClientForm({
   isVisible = false,
   closeModal,
 }: NewClientFormProps) {
+  function handleSaveNewClient() {
+    saveNewClient({
+      id: '71259341',
+      name: 'Eduardo Oliveira',
+      phone: '32998099878',
+      address: 'Rua São Mateus 632/201',
+      sales: [],
+    });
+  }
+
   return (
     <Container isVisible={isVisible}>
       <Form>
@@ -69,7 +81,7 @@ export function NewClientForm({
             />
             <Button
               title="Cadastrar"
-              buttonAttrs={{ onClick: () => {}, type: 'submit' }}
+              buttonAttrs={{ onClick: handleSaveNewClient, type: 'submit' }}
             />
           </div>
         </FormOptions>

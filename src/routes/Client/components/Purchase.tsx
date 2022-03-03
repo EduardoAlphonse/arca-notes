@@ -1,22 +1,12 @@
 import styled from 'styled-components';
 
-export type PurchaseData = {
-  id: string;
-  clientId: string;
-  value: number;
-  date: string;
-  items: {
-    description: string;
-    quantity: number;
-    value: number;
-  }[];
-};
+import { SaleType } from '../../../@types/entities';
 
 type PurchaseProps = {
-  data: PurchaseData;
+  data: SaleType;
 };
 
-export function Purchase({ data: { value, date, items } }: PurchaseProps) {
+export function Sale({ data: { value, date, items } }: PurchaseProps) {
   return (
     <StyledPurchase>
       <Header>

@@ -1,5 +1,5 @@
 import { ClientData } from '../routes/Home/components/Client';
-import { PurchaseData } from '../routes/Client/components/Purchase';
+import { SaleType } from '../@types/entities';
 
 const clients: ClientData[] = [
   {
@@ -84,7 +84,7 @@ export function getClient(id: string) {
   };
 }
 
-const purchases: PurchaseData[] = [
+const sales: SaleType[] = [
   {
     id: '102944',
     clientId: '934820',
@@ -186,13 +186,11 @@ const purchases: PurchaseData[] = [
 ];
 
 export function getPurchase(clientId: string) {
-  const filteredPurchases = purchases.filter(
-    (purchase) => purchase.clientId === clientId
-  );
+  const filteredPurchases = sales.filter((sale) => sale.clientId === clientId);
 
   return filteredPurchases;
 }
 
 export function getPurchases() {
-  return purchases;
+  return sales;
 }
