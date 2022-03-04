@@ -1,4 +1,4 @@
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, push } from 'firebase/database';
 import { app } from '.';
 
 import { ClientType, SaleType } from '../../@types/entities';
@@ -6,7 +6,11 @@ import { ClientType, SaleType } from '../../@types/entities';
 const database = getDatabase(app);
 
 export async function saveNewClient(client: ClientType) {
-  await set(ref(database, 'clients/' + client.id), client);
+  const newClientRef = push(ref(database, 'clients'));
+  await set(newClientRef, client);
 }
 
-export async function saveNewSale(clientId: string, sale: SaleType) {}
+export async function saveNewSale(sale: SaleType) {
+  const newSaleRef = push(ref(database, 'sales'));
+  await set(newSaleRef, sale);
+}

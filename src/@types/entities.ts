@@ -2,7 +2,10 @@ export type ClientType = {
   id: string;
   name: string;
   phone: string;
+  cpf: string;
   address: string;
+  addressNumber: string;
+  district: string;
   sales: {
     [saleId: string]: boolean;
   }[];

@@ -45,10 +45,6 @@ export const Form = styled.form`
 
   box-shadow: 0px 58px 52px -31px rgba(0, 0, 0, 0.25);
 
-  input {
-    text-align: left;
-  }
-
   animation: ${slideUp} 300ms forwards;
 `;
 
@@ -94,4 +90,32 @@ export const FormOptions = styled.div`
       flex: 1;
     }
   }
+`;
+
+export const LabeledInput = styled.label`
+  width: 100%;
+
+  input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid ${({ theme }) => theme.colors.common.white};
+    border-radius: ${({ theme }) => theme.shapes.borderRadius};
+
+    font: ${({ theme }) => theme.typography.text};
+    color: ${({ theme }) => theme.colors.text.normal};
+    text-align: left;
+
+    outline: none;
+    transition: 300ms;
+
+    &:focus {
+      border-color: ${({ theme }) => theme.colors.primary.normal};
+    }
+  }
+`;
+
+export const Label = styled.p`
+  font: ${({ theme }) => theme.typography.textSmall};
+  color: ${({ theme }) => theme.colors.text.normal};
+  margin-bottom: 6px;
 `;
