@@ -1,16 +1,22 @@
-import { getDatabase, ref, set, push } from 'firebase/database';
+import { getDatabase, ref, set, get, push, child } from 'firebase/database';
 import { app } from '.';
 
-import { ClientType, SaleType } from '../../@types/entities';
+import { ClientData, PurchaseData } from '../../@types/entities';
 
-const database = getDatabase(app);
+export const database = getDatabase(app);
 
-export async function saveNewClient(client: ClientType) {
+export function saveNewClient(client: ClientData) {
   const newClientRef = push(ref(database, 'clients'));
-  await set(newClientRef, client);
+  set(newClientRef, client);
 }
 
-export async function saveNewSale(sale: SaleType) {
-  const newSaleRef = push(ref(database, 'sales'));
-  await set(newSaleRef, sale);
+export function saveNewPurchase(sale: PurchaseData) {
+  const newPurchaseRef = push(ref(database, 'sales'));
+  set(newPurchaseRef, sale);
+}
+
+export async function getClients(): Promise<ClientData[]> {
+  const databaseRef = ref(database);
+  const databaseClients = await get(child(databaseRef, 'clients'));
+  return Object.values(databaseClients.val());
 }

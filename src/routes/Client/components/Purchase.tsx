@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import { SaleType } from '../../../@types/entities';
+import { PurchaseData } from '../../../@types/entities';
 
 type PurchaseProps = {
-  data: SaleType;
+  data: PurchaseData;
 };
 
 export function Sale({ data: { value, date, items } }: PurchaseProps) {

@@ -10,6 +10,7 @@ const theme: DefaultTheme = {
     text: {
       normal: '#3F3F3F',
       light: '#767676',
+      lighter: '#B8B8B8',
     },
     background: {
       light: '#F7F7F7',

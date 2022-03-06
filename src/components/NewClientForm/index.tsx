@@ -13,7 +13,8 @@ import {
   Label,
 } from './styles';
 
-import { ClientType } from '../../@types/entities';
+// import { ClientData } from '../../@types/entities';
+import { ClientData } from '../../@types/entities';
 import { saveNewClient } from '../../services/firebase/database';
 
 import { Subtitle } from '../CommonComponents';
@@ -29,10 +30,11 @@ export function NewClientForm({
   isVisible = false,
   closeModal,
 }: NewClientFormProps) {
-  const { handleSubmit, register } = useForm<ClientType>();
+  const { handleSubmit, register, reset } = useForm<ClientData>();
 
-  async function handleSaveNewClient(data: ClientType) {
-    await saveNewClient(data);
+  function handleSaveNewClient(data: ClientData) {
+    saveNewClient(data);
+    // reset();
   }
 
   return (
@@ -46,6 +48,7 @@ export function NewClientForm({
             <LabeledInput>
               <Label>Nome</Label>
               <input
+                autoComplete="off"
                 placeholder="Nome do cliente"
                 {...register('name', { required: true })}
               />
@@ -53,6 +56,7 @@ export function NewClientForm({
             <LabeledInput>
               <Label>Telefone</Label>
               <input
+                autoComplete="off"
                 placeholder="32988887777"
                 {...register('phone', { required: true })}
               />
@@ -60,6 +64,7 @@ export function NewClientForm({
             <LabeledInput>
               <Label>CPF</Label>
               <input
+                autoComplete="off"
                 placeholder="12306029244"
                 {...register('cpf', { required: true })}
               />
@@ -71,6 +76,7 @@ export function NewClientForm({
             <LabeledInput>
               <Label>Logradouro</Label>
               <input
+                autoComplete="off"
                 placeholder="Nome da rua"
                 {...register('address', { required: true })}
               />
@@ -79,6 +85,7 @@ export function NewClientForm({
               <LabeledInput>
                 <Label>Número</Label>
                 <input
+                  autoComplete="off"
                   placeholder="42"
                   {...register('addressNumber', { required: true })}
                 />
@@ -86,6 +93,7 @@ export function NewClientForm({
               <LabeledInput>
                 <Label>Bairro</Label>
                 <input
+                  autoComplete="off"
                   placeholder="Nome do bairro"
                   {...register('district', { required: true })}
                 />

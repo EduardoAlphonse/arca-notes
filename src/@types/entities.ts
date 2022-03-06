@@ -1,4 +1,4 @@
-export type ClientType = {
+export type ClientData = {
   id: string;
   name: string;
   phone: string;
@@ -6,19 +6,19 @@ export type ClientType = {
   address: string;
   addressNumber: string;
   district: string;
-  sales: {
-    [saleId: string]: boolean;
-  }[];
+  totalDebt: number;
+  purchases: PurchaseData[];
 };
 
-export type SaleType = {
+export type PurchaseData = {
   id: string;
-  clientId: string;
   value: number;
   date: string;
-  items: {
-    description: string;
-    quantity: number;
-    value: number;
-  }[];
+  items: ItemType[];
+};
+
+export type ItemType = {
+  description: string;
+  quantity: number;
+  value: number;
 };

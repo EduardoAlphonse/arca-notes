@@ -102,7 +102,7 @@ export const LabeledInput = styled.label`
     border-radius: ${({ theme }) => theme.shapes.borderRadius};
 
     font: ${({ theme }) => theme.typography.text};
-    color: ${({ theme }) => theme.colors.text.normal};
+    color: ${({ theme }) => theme.colors.common.black};
     text-align: left;
 
     outline: none;
@@ -110,6 +110,10 @@ export const LabeledInput = styled.label`
 
     &:focus {
       border-color: ${({ theme }) => theme.colors.primary.normal};
+    }
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.text.lighter};
     }
   }
 `;
