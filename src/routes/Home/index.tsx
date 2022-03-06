@@ -53,20 +53,22 @@ export function Home() {
     const clientsRef = ref(database, 'clients');
 
     const unsubscribe = onValue(clientsRef, (snapshot) => {
-      const clientsKeyValue: [key: string, value: ClientData][] =
-        Object.entries(snapshot.val());
+      if (snapshot.exists()) {
+        const clientsKeyValue: [key: string, value: ClientData][] =
+          Object.entries(snapshot.val());
 
-      const formattedClientsArray: ClientData[] = clientsKeyValue.map(
-        ([key, value]) => {
-          return {
-            ...value,
-            id: key,
-          };
-        }
-      );
+        const formattedClientsArray: ClientData[] = clientsKeyValue.map(
+          ([key, value]) => {
+            return {
+              ...value,
+              id: key,
+            };
+          }
+        );
 
-      setClients(formattedClientsArray);
-      setFilteredClients(formattedClientsArray);
+        setClients(formattedClientsArray);
+        setFilteredClients(formattedClientsArray);
+      }
     });
 
     return () => unsubscribe();
@@ -76,13 +78,15 @@ export function Home() {
     const purchasesRef = ref(database, 'purchases');
 
     const unsubscribe = onValue(purchasesRef, (snapshot) => {
-      const purchases: PurchaseData[] = Object.values(snapshot.val());
-      const purchasesNumber = purchases.length;
-      const purchasesTotalValue = purchases
-        .map((purchase) => purchase.value)
-        .reduce((prev, curr) => prev + curr);
+      if (snapshot.exists()) {
+        const purchases: PurchaseData[] = Object.values(snapshot.val());
+        const purchasesNumber = purchases.length;
+        const purchasesTotalValue = purchases
+          .map((purchase) => purchase.value)
+          .reduce((prev, curr) => prev + curr);
 
-      setTotalPurchases({ purchasesNumber, purchasesTotalValue });
+        setTotalPurchases({ purchasesNumber, purchasesTotalValue });
+      }
     });
 
     return () => unsubscribe();
@@ -109,9 +113,13 @@ export function Home() {
           </ClientsHeader>
 
           <ClientList>
-            {filteredClients.map((client) => (
-              <Client key={client.id} data={client} />
-            ))}
+            {filteredClients.length > 0 ? (
+              filteredClients.map((client) => (
+                <Client key={client.id} data={client} />
+              ))
+            ) : (
+              <h2>Nenhum cliente cadastrado</h2>
+            )}
           </ClientList>
         </Clients>
 

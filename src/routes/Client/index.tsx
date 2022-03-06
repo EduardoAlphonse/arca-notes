@@ -50,9 +50,10 @@ export function Client() {
 
       setClient(clientSnapshot);
 
-      const purchases = Object.values(clientSnapshot.purchases);
-      setPurchases(purchases);
-      purchases[0].items;
+      if (clientSnapshot.purchases) {
+        const purchases = Object.values(clientSnapshot.purchases);
+        setPurchases(purchases);
+      }
       // const totalPurchases = purchases.reduce((acc, curr) => acc.value + curr.value);
       // setTotalPurchases();
     });
@@ -97,9 +98,13 @@ export function Client() {
           </ClientsHeader>
 
           <PurchaseList>
-            {purchases.map((purchase) => (
-              <Sale key={purchase.id} data={purchase} />
-            ))}
+            {purchases.length > 0 ? (
+              purchases.map((purchase) => (
+                <Sale key={purchase.id} data={purchase} />
+              ))
+            ) : (
+              <h2>Nenhuma venda registrada</h2>
+            )}
           </PurchaseList>
         </Clients>
 
