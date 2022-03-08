@@ -8,6 +8,7 @@ import {
   SectionTitle,
   FormFields,
   Separator,
+  ProductsList,
   FormOptions,
   LabeledInput,
   Label,
@@ -20,97 +21,91 @@ import { saveNewClient } from '../../services/firebase/database';
 import { Subtitle } from '../CommonComponents';
 // import { input } from '../input';
 import { Button } from '../Button';
+import { ItemList } from './components/ItemList';
 
 type NewClientFormProps = {
   isVisible: boolean;
   closeModal: () => void;
 };
 
+type ItemData = {
+  quantity: number;
+  description: string;
+  value: string;
+};
+
+type ItemListData = {
+  data: ItemData[];
+};
+
 export function NewPurchaseForm({
   isVisible = false,
   closeModal,
 }: NewClientFormProps) {
-  const { handleSubmit, register, reset } = useForm<ClientData>();
+  const { handleSubmit, register, reset } = useForm<ItemData>();
 
-  function handleSaveNewClient(data: ClientData) {
-    saveNewClient(data);
+  function handleAddNewItem(data: ItemData) {
+    console.log(data);
     // reset();
   }
 
   return (
     <Container isVisible={isVisible}>
-      <Form onSubmit={handleSubmit(handleSaveNewClient)}>
+      <Form onSubmit={handleSubmit(handleAddNewItem)}>
         <Subtitle>Inserir nova compra</Subtitle>
 
         <FormFields>
           <Section>
-            <SectionTitle>Informações pessoais</SectionTitle>
+            <SectionTitle>Dados da venda</SectionTitle>
             <LabeledInput>
-              <Label>Nome</Label>
+              <Label>Descrição</Label>
               <input
                 autoComplete="off"
-                placeholder="Nome do cliente"
-                {...register('name', { required: true })}
+                placeholder="Descrição do produto/serviço"
+                {...register('description', { required: true })}
               />
             </LabeledInput>
             <LabeledInput>
-              <Label>Telefone</Label>
+              <Label>Quantidade</Label>
               <input
                 autoComplete="off"
-                placeholder="32988887777"
-                {...register('phone', { required: true })}
+                placeholder="15kg / 2"
+                {...register('quantity', { required: true })}
               />
             </LabeledInput>
             <LabeledInput>
-              <Label>CPF</Label>
+              <Label>Valor</Label>
               <input
                 autoComplete="off"
-                placeholder="12306029244"
-                {...register('cpf', { required: true })}
+                placeholder="89,90"
+                {...register('value', { required: true })}
               />
             </LabeledInput>
           </Section>
           <Separator />
           <Section>
-            <SectionTitle>Endereço</SectionTitle>
-            <LabeledInput>
-              <Label>Logradouro</Label>
-              <input
-                autoComplete="off"
-                placeholder="Nome da rua"
-                {...register('address', { required: true })}
-              />
-            </LabeledInput>
-            <div>
-              <LabeledInput>
-                <Label>Número</Label>
-                <input
-                  autoComplete="off"
-                  placeholder="42"
-                  {...register('addressNumber', { required: true })}
-                />
-              </LabeledInput>
-              <LabeledInput>
-                <Label>Bairro</Label>
-                <input
-                  autoComplete="off"
-                  placeholder="Nome do bairro"
-                  {...register('district', { required: true })}
-                />
-              </LabeledInput>
-            </div>
+            <SectionTitle>Produtos/Serviços</SectionTitle>
+            <ProductsList>
+              <ItemList />
+              <ItemList />
+              <ItemList />
+              <ItemList />
+              <ItemList />
+              <ItemList />
+            </ProductsList>
           </Section>
         </FormFields>
 
         <FormOptions>
-          <div />
           <div>
             <Button
-              title="Cancelar"
-              buttonAttrs={{ onClick: closeModal, type: 'button' }}
-              buttonStyle="secondary"
+              title="Adicionar"
+              buttonAttrs={{
+                type: 'submit',
+                onClick: () => {},
+                style: { flex: 'unset' },
+              }}
             />
-            <Button title="Cadastrar" buttonAttrs={{ type: 'submit' }} />
           </div>
         </FormOptions>
       </Form>

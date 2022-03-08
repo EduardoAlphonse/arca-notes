@@ -7,6 +7,7 @@ export const Container = styled.button<{
   align-items: center;
   min-width: 14rem;
   min-height: 44px;
+  padding: 0 2rem;
 
   background-color: ${({ theme, buttonStyle }) =>
     buttonStyle === 'primary' ? theme.colors.primary.normal : 'transparent'};

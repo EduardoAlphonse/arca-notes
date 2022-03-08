@@ -76,6 +76,11 @@ export const Separator = styled.div`
   margin: 2.5rem 0;
 `;
 
+export const ProductsList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const FormOptions = styled.div`
   display: flex;
   gap: 1.5rem;
