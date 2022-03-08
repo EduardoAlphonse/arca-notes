@@ -26,7 +26,7 @@ type NewClientFormProps = {
   closeModal: () => void;
 };
 
-export function NewClientForm({
+export function NewPurchaseForm({
   isVisible = false,
   closeModal,
 }: NewClientFormProps) {
@@ -40,7 +40,7 @@ export function NewClientForm({
   return (
     <Container isVisible={isVisible}>
       <Form onSubmit={handleSubmit(handleSaveNewClient)}>
-        <Subtitle>Cadastrar novo cliente</Subtitle>
+        <Subtitle>Inserir nova compra</Subtitle>
 
         <FormFields>
           <Section>

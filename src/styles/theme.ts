@@ -20,6 +20,9 @@ const theme: DefaultTheme = {
       white: '#FFFFFF',
       divider: '#D2D2D2',
     },
+    danger: {
+      normal: '#DE6060',
+    },
   },
   typography: {
     title: '600 1.5rem Poppins',

@@ -15,7 +15,7 @@ import {
 import { Title } from '../../components/CommonComponents';
 import { SummaryCard } from '../../components/SummaryCard';
 import { Sale } from './components/Purchase';
-import { NewClientForm } from '../../components/NewClientForm';
+import { NewPurchaseForm } from '../../components/NewPurchaseForm';
 import { Button } from '../../components/Button';
 
 import { database } from '../../services/firebase/database';
@@ -126,7 +126,7 @@ export function Client() {
         </Summary>
       </Content>
 
-      <NewClientForm
+      <NewPurchaseForm
         isVisible={isNewSaleModalOpen}
         closeModal={handleCloseNewSaleModal}
       />

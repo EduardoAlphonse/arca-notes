@@ -24,6 +24,10 @@ declare module 'styled-components' {
         white: string;
         divider: string;
       };
+
+      danger: {
+        normal: string;
+      };
     };
 
     typography: {
