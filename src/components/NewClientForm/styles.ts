@@ -38,6 +38,7 @@ export const Form = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 46rem;
   gap: 1.5rem;
   padding: 2rem;
   background-color: ${({ theme }) => theme.colors.background.light};
@@ -107,6 +108,8 @@ export const FormOptions = styled.div`
     display: flex;
     flex: 1;
     gap: 1.5rem;
+
+    justify-content: space-between;
 
     button {
       min-width: 0px;

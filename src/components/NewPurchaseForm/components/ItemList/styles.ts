@@ -11,9 +11,31 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.common.white};
 `;
 
-export const Quantity = styled.span``;
+export const Quantity = styled.span`
+  position: relative;
+  width: 2.5rem;
+  text-align: center;
 
-export const Description = styled.p``;
+  padding-right: 0.75rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: -1.5px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 3px;
+    background-color: ${({ theme }) => theme.colors.text.lighter};
+  }
+`;
+
+export const Description = styled.p`
+  flex: 1;
+`;
 
 export const Value = styled.span``;
 

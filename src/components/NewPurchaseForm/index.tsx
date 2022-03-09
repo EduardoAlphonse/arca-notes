@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiX } from 'react-icons/fi';
 
@@ -16,40 +16,37 @@ import {
   Label,
 } from '../NewClientForm/styles';
 
-// import { ClientData } from '../../@types/entities';
-import { ClientData } from '../../@types/entities';
-import { saveNewClient } from '../../services/firebase/database';
+import { saveNewPurchase } from '../../services/firebase/database';
 
 import { Subtitle } from '../CommonComponents';
-// import { input } from '../input';
 import { Button } from '../Button';
 import { ItemList } from './components/ItemList';
 import { theme } from '../../styles/theme';
+
+import { ItemData } from './components/ItemList';
 
 type NewClientFormProps = {
   isVisible: boolean;
   closeModal: () => void;
 };
 
-type ItemData = {
-  quantity: number;
-  description: string;
-  value: string;
-};
-
-type ItemListData = {
-  data: ItemData[];
-};
+type ItemListData = ItemData[];
 
 export function NewPurchaseForm({
   isVisible = false,
   closeModal,
 }: NewClientFormProps) {
-  const { handleSubmit, register, reset } = useForm<ItemData>();
+  const [purchaseItemsList, setPurchaseItemsList] = useState<ItemListData>([]);
+
+  const { handleSubmit, register, reset, control } = useForm<ItemData>();
+  const descriptionInputRef = useRef<HTMLInputElement>(null);
 
   function handleAddNewItem(data: ItemData) {
-    console.log(data);
-    // reset();
+    // console.log('test');
+    // console.log(data);
+    setPurchaseItemsList((prevItems) => [...prevItems, data]);
+    reset();
+    // descriptionInputRef.current?.focus();
   }
 
   return (
@@ -57,7 +54,7 @@ export function NewPurchaseForm({
       <Form onSubmit={handleSubmit(handleAddNewItem)}>
         <FormHeader>
           <Subtitle>Inserir nova compra</Subtitle>
-          <button onClick={closeModal}>
+          <button onClick={closeModal} type="button">
             <FiX size="1.25rem" color={theme.colors.text.normal} />
           </button>
         </FormHeader>
@@ -68,9 +65,10 @@ export function NewPurchaseForm({
             <LabeledInput>
               <Label>Descrição</Label>
               <input
+                {...register('description', { required: true })}
                 autoComplete="off"
                 placeholder="Descrição do produto/serviço"
-                {...register('description', { required: true })}
+                // ref={descriptionInputRef}
               />
             </LabeledInput>
             <LabeledInput>
@@ -94,23 +92,32 @@ export function NewPurchaseForm({
           <Section>
             <SectionTitle>Produtos/Serviços</SectionTitle>
             <ProductsList>
-              <ItemList />
-              <ItemList />
-              <ItemList />
-              <ItemList />
-              <ItemList />
-              <ItemList />
+              {purchaseItemsList.map((purchaseItem) => (
+                <ItemList
+                  key={purchaseItem.description}
+                  description={purchaseItem.description}
+                  quantity={purchaseItem.quantity}
+                  value={purchaseItem.value}
+                />
+              ))}
             </ProductsList>
           </Section>
         </FormFields>
 
         <FormOptions>
-          <div>
+          <div style={{}}>
             <Button
               title="Adicionar"
               buttonAttrs={{
+                type: 'submit',
+                style: { flex: 'unset' },
+              }}
+            />
+
+            <Button
+              title="Finalizar"
+              buttonAttrs={{
                 type: 'button',
-                onClick: () => {},
                 style: { flex: 'unset' },
               }}
             />
