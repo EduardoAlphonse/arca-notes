@@ -65,7 +65,6 @@ export const FormHeader = styled.div`
 
 export const FormFields = styled.div`
   display: flex;
-  align-items: flex-start;
   gap: 1.5rem;
 `;
 
@@ -73,14 +72,12 @@ export const Section = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  height: 15.9rem;
   gap: 0.75rem;
-
-  border: 2px solid red;
 
   > div {
     display: flex;
     flex: 1;
-    /* height: 100%; */
     gap: 0.75rem;
   }
 `;
@@ -99,6 +96,7 @@ export const Separator = styled.div`
 export const ProductsList = styled.div`
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
 `;
 
 export const FormOptions = styled.div`

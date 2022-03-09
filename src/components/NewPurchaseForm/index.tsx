@@ -96,10 +96,10 @@ export function NewPurchaseForm({
             <ProductsList>
               <ItemList />
               <ItemList />
-              {/* <ItemList />
               <ItemList />
               <ItemList />
-              <ItemList /> */}
+              <ItemList />
+              <ItemList />
             </ProductsList>
           </Section>
         </FormFields>
@@ -109,7 +109,7 @@ export function NewPurchaseForm({
             <Button
               title="Adicionar"
               buttonAttrs={{
-                type: 'submit',
+                type: 'button',
                 onClick: () => {},
                 style: { flex: 'unset' },
               }}

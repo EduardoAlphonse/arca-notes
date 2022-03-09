@@ -7,7 +7,6 @@ export const Container = styled.button<{
   align-items: center;
   min-width: 14rem;
   min-height: 44px;
-  padding: 0 2rem;
 
   background-color: ${({ theme, buttonStyle }) =>
     buttonStyle === 'primary' ? theme.colors.primary.normal : 'transparent'};
@@ -24,6 +23,7 @@ export const Container = styled.button<{
 
   span {
     flex: 1;
+    padding: 0 2rem;
     font: ${({ theme }) => theme.typography.button};
     color: ${({ theme, buttonStyle }) =>
       buttonStyle === 'primary'
