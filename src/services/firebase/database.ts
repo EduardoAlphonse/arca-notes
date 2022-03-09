@@ -7,7 +7,10 @@ export const database = getDatabase(app);
 
 export function saveNewClient(client: ClientData) {
   const newClientRef = push(ref(database, 'clients'));
-  set(newClientRef, client);
+  set(newClientRef, {
+    ...client,
+    total: 0,
+  });
 }
 
 export function saveNewPurchase(sale: PurchaseData) {

@@ -1,9 +1,11 @@
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
+import { FiX } from 'react-icons/fi';
 
 import {
   Container,
   Form,
+  FormHeader,
   Section,
   SectionTitle,
   FormFields,
@@ -22,6 +24,7 @@ import { Subtitle } from '../CommonComponents';
 // import { input } from '../input';
 import { Button } from '../Button';
 import { ItemList } from './components/ItemList';
+import { theme } from '../../styles/theme';
 
 type NewClientFormProps = {
   isVisible: boolean;
@@ -52,7 +55,12 @@ export function NewPurchaseForm({
   return (
     <Container isVisible={isVisible}>
       <Form onSubmit={handleSubmit(handleAddNewItem)}>
-        <Subtitle>Inserir nova compra</Subtitle>
+        <FormHeader>
+          <Subtitle>Inserir nova compra</Subtitle>
+          <button onClick={closeModal}>
+            <FiX size="1.25rem" color={theme.colors.text.normal} />
+          </button>
+        </FormHeader>
 
         <FormFields>
           <Section>
@@ -88,10 +96,10 @@ export function NewPurchaseForm({
             <ProductsList>
               <ItemList />
               <ItemList />
+              {/* <ItemList />
               <ItemList />
               <ItemList />
-              <ItemList />
-              <ItemList />
+              <ItemList /> */}
             </ProductsList>
           </Section>
         </FormFields>

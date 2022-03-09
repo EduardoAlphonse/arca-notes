@@ -48,8 +48,24 @@ export const Form = styled.form`
   animation: ${slideUp} 300ms forwards;
 `;
 
+export const FormHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    font-size: 0;
+    background: none;
+    border: none;
+    padding: 0.25rem;
+
+    cursor: pointer;
+  }
+`;
+
 export const FormFields = styled.div`
   display: flex;
+  align-items: flex-start;
   gap: 1.5rem;
 `;
 
@@ -59,8 +75,12 @@ export const Section = styled.div`
   flex-direction: column;
   gap: 0.75rem;
 
+  border: 2px solid red;
+
   > div {
     display: flex;
+    flex: 1;
+    /* height: 100%; */
     gap: 0.75rem;
   }
 `;
