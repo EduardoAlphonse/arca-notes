@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiX } from 'react-icons/fi';
 
@@ -48,7 +48,6 @@ export function NewPurchaseForm({
   const [purchaseItemsList, setPurchaseItemsList] = useState<ItemData[]>([]);
 
   const { handleSubmit, register, reset } = useForm<FormData>();
-  const descriptionInputRef = useRef<HTMLInputElement>(null);
 
   function handleAddNewItem(data: FormData) {
     const newItem = { ...data, key: randomNumber() };
@@ -141,7 +140,7 @@ export function NewPurchaseForm({
               buttonAttrs={{
                 type: 'button',
                 style: { flex: 'unset' },
-                onClick = {},
+                onClick = { handleSavePurchase },
               }}
             />
           </div>
