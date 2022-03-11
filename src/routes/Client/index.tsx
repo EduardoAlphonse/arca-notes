@@ -22,10 +22,17 @@ import { database } from '../../services/firebase/database';
 
 import { ClientData, PurchaseData } from '../../@types/entities';
 
+type TotalPurchasesData = {
+  totalPurchases: number;
+  totalValue: number;
+};
+
 export function Client() {
   const [client, setClient] = useState<ClientData>({} as ClientData);
   const [purchases, setPurchases] = useState<PurchaseData[]>([]);
-  const [totalPurchases, setTotalPurchases] = useState();
+  const [totalPurchases, setTotalPurchases] = useState<TotalPurchasesData>(
+    {} as TotalPurchasesData
+  );
   const [isNewSaleModalOpen, setIsNewSaleModalOpen] = useState(false);
 
   const params = useParams<{ clientId: string }>();
@@ -46,13 +53,20 @@ export function Client() {
     const clientsRef = ref(database, 'clients/' + params.clientId);
 
     const unsubscribe = onValue(clientsRef, (snapshot) => {
-      const clientSnapshot: ClientData = snapshot.val();
+      const clientData: ClientData = snapshot.val();
 
-      setClient(clientSnapshot);
+      setClient(clientData);
 
-      if (clientSnapshot.purchases) {
-        const purchases = Object.values(clientSnapshot.purchases);
+      if (clientData.purchases) {
+        const purchases = Object.values(clientData.purchases);
         setPurchases(purchases);
+
+        setTotalPurchases({
+          totalPurchases: purchases.length,
+          totalValue: purchases
+            .map((item) => item.value)
+            .reduce((prev, curr) => prev + curr),
+        });
       }
       // const totalPurchases = purchases.reduce((acc, curr) => acc.value + curr.value);
       // setTotalPurchases();
@@ -60,29 +74,6 @@ export function Client() {
 
     return () => unsubscribe();
   }, []);
-
-  // useEffect(() => {
-  //   const clientsRef = ref(database, 'clients/' + params.clientId);
-
-  //   const unsubscribe = onValue(clientsRef, (snapshot) => {
-  //     const purchasesKeyValue: [key: string, value: PurchaseData][] =
-  //       Object.entries(snapshot.val());
-  //     const formattedPurchasesArray: PurchaseData[] = purchasesKeyValue.map(
-  //       ([key, value]) => {
-  //         return {
-  //           ...value,
-  //           id: key,
-  //         };
-  //       }
-  //     );
-
-  //     setPurchases(formattedPurchasesArray);
-  //   });
-
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
 
   return (
     <Container>
@@ -113,7 +104,7 @@ export function Client() {
 
           <SummaryCard
             purchasesNumber={purchases.length}
-            purchasesTotalValue={totalPurchases || 0}
+            purchasesTotalValue={totalPurchases.totalValue}
           />
 
           <SummaryFooter>
@@ -127,6 +118,7 @@ export function Client() {
       </Content>
 
       <NewPurchaseForm
+        clientId={params.clientId || ''}
         isVisible={isNewSaleModalOpen}
         closeModal={handleCloseNewSaleModal}
       />

@@ -34,7 +34,8 @@ export function NewClientForm({
 
   function handleSaveNewClient(data: ClientData) {
     saveNewClient(data);
-    // reset();
+    reset();
+    closeModal();
   }
 
   return (

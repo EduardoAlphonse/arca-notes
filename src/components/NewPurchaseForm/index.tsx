@@ -16,37 +16,56 @@ import {
   Label,
 } from '../NewClientForm/styles';
 
-import { saveNewPurchase } from '../../services/firebase/database';
+// import { saveNewPurchase } from '../../services/firebase/database';
 
 import { Subtitle } from '../CommonComponents';
 import { Button } from '../Button';
 import { ItemList } from './components/ItemList';
 import { theme } from '../../styles/theme';
 
+import { saveNewPurchase } from '../../services/firebase/database';
+
 import { ItemData } from './components/ItemList';
+import { randomNumber } from '../../utils/randomNumber';
 
 type NewClientFormProps = {
   isVisible: boolean;
+  clientId: string;
   closeModal: () => void;
 };
 
-type ItemListData = ItemData[];
+type FormData = {
+  quantity: string;
+  description: string;
+  value: string;
+};
 
 export function NewPurchaseForm({
   isVisible = false,
+  clientId,
   closeModal,
 }: NewClientFormProps) {
-  const [purchaseItemsList, setPurchaseItemsList] = useState<ItemListData>([]);
+  const [purchaseItemsList, setPurchaseItemsList] = useState<ItemData[]>([]);
 
-  const { handleSubmit, register, reset, control } = useForm<ItemData>();
+  const { handleSubmit, register, reset } = useForm<FormData>();
   const descriptionInputRef = useRef<HTMLInputElement>(null);
 
-  function handleAddNewItem(data: ItemData) {
-    // console.log('test');
-    // console.log(data);
-    setPurchaseItemsList((prevItems) => [...prevItems, data]);
+  function handleAddNewItem(data: FormData) {
+    const newItem = { ...data, key: randomNumber() };
+    console.log(newItem);
+    setPurchaseItemsList((prevItems) => [newItem, ...prevItems]);
     reset();
-    // descriptionInputRef.current?.focus();
+  }
+
+  function handleRemoveItem(key: number) {
+    const newPurchaseItemsList = purchaseItemsList.filter(
+      (item) => item.key !== key
+    );
+    setPurchaseItemsList(newPurchaseItemsList);
+  }
+
+  function handleSavePurchase() {
+    saveNewPurchase(clientId, {});
   }
 
   return (
@@ -68,7 +87,6 @@ export function NewPurchaseForm({
                 {...register('description', { required: true })}
                 autoComplete="off"
                 placeholder="Descrição do produto/serviço"
-                // ref={descriptionInputRef}
               />
             </LabeledInput>
             <LabeledInput>
@@ -84,6 +102,9 @@ export function NewPurchaseForm({
               <input
                 autoComplete="off"
                 placeholder="89,90"
+                type="number"
+                step="0.01"
+                min="0"
                 {...register('value', { required: true })}
               />
             </LabeledInput>
@@ -94,10 +115,11 @@ export function NewPurchaseForm({
             <ProductsList>
               {purchaseItemsList.map((purchaseItem) => (
                 <ItemList
-                  key={purchaseItem.description}
+                  key={purchaseItem.key}
                   description={purchaseItem.description}
                   quantity={purchaseItem.quantity}
                   value={purchaseItem.value}
+                  onClick={() => handleRemoveItem(purchaseItem.key)}
                 />
               ))}
             </ProductsList>
@@ -105,7 +127,7 @@ export function NewPurchaseForm({
         </FormFields>
 
         <FormOptions>
-          <div style={{}}>
+          <div>
             <Button
               title="Adicionar"
               buttonAttrs={{
@@ -119,6 +141,7 @@ export function NewPurchaseForm({
               buttonAttrs={{
                 type: 'button',
                 style: { flex: 'unset' },
+                onClick = {},
               }}
             />
           </div>
