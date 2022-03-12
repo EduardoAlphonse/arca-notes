@@ -27,6 +27,20 @@ type TotalPurchasesData = {
   totalValue: number;
 };
 
+type ClientResponseData = {
+  id: string;
+  name: string;
+  phone: string;
+  cpf: string;
+  address: string;
+  addressNumber: string;
+  district: string;
+  totalDebt: number;
+  purchases: {
+    [id: string]: string;
+  };
+};
+
 export function Client() {
   const [client, setClient] = useState<ClientData>({} as ClientData);
   const [purchases, setPurchases] = useState<PurchaseData[]>([]);
@@ -53,14 +67,21 @@ export function Client() {
     const clientsRef = ref(database, 'clients/' + params.clientId);
 
     const unsubscribe = onValue(clientsRef, (snapshot) => {
-      const clientData: ClientData = snapshot.val();
+      const clientResponseData: ClientResponseData = snapshot.val();
 
-      setClient(clientData);
+      if (clientResponseData.purchases) {
+        const purchasesStrings = Object.values(clientResponseData.purchases);
 
-      if (clientData.purchases) {
-        const purchases = Object.values(clientData.purchases);
-        console.log(clientData.purchases);
-        setPurchases(purchases);
+        console.log('values', purchasesStrings);
+
+        const purchasesArray: PurchaseData[] = purchasesStrings.map((item) =>
+          JSON.parse(item)
+        );
+        console.log(purchasesArray);
+        setPurchases(purchasesArray);
+
+        const values = purchasesArray.map((item) => item.value);
+        console.log('valuesprice', values);
 
         setTotalPurchases({
           totalPurchases: purchases.length,
