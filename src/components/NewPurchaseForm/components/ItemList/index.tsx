@@ -4,14 +4,19 @@ import { theme } from '../../../../styles/theme';
 
 import { Container, Quantity, Description, Value, RemoveItem } from './styles';
 
-export type ItemData = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ItemListProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   key: number;
   quantity: string;
   description: string;
   value: string;
 };
 
-export function ItemList({ quantity, description, value, ...rest }: ItemData) {
+export function ItemList({
+  quantity,
+  description,
+  value,
+  ...rest
+}: ItemListProps) {
   const convertedValue = Number(value.replace(',', '.'));
 
   return (

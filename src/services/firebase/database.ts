@@ -13,11 +13,13 @@ export function saveNewClient(client: ClientData) {
   });
 }
 
-export function saveNewPurchase(clientId: string, purchase: string) {
+export function saveNewPurchase(clientId: string, purchase: PurchaseData[]) {
   const newPurchaseRef = push(
     ref(database, 'clients/' + clientId + '/purchases')
   );
-  set(newPurchaseRef, purchase);
+  set(newPurchaseRef, {
+    value: purchase,
+  });
 }
 
 export async function getClients(): Promise<ClientData[]> {

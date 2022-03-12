@@ -25,7 +25,8 @@ import { theme } from '../../styles/theme';
 
 import { saveNewPurchase } from '../../services/firebase/database';
 
-import { ItemData } from './components/ItemList';
+// import { ItemListProps } from './components/ItemList';
+import { ItemData, PurchaseData } from '../../@types/entities';
 import { randomNumber } from '../../utils/randomNumber';
 
 type NewClientFormProps = {
@@ -45,25 +46,35 @@ export function NewPurchaseForm({
   clientId,
   closeModal,
 }: NewClientFormProps) {
-  const [purchaseItemsList, setPurchaseItemsList] = useState<ItemData[]>([]);
+  const [purchaseItemsList, setPurchaseItemsList] = useState<PurchaseData[]>(
+    []
+  );
 
   const { handleSubmit, register, reset } = useForm<FormData>();
 
   function handleAddNewItem(data: FormData) {
-    const newItem: ItemData = { ...data, key: randomNumber() };
+    const newItem: PurchaseData = {
+      id: String(randomNumber()),
+      date: new Date().toString(),
+      value: Number(data.value),
+      items
+      quantity: data.quantity,
+      description: data.description,
+    };
+
     setPurchaseItemsList((prevItems) => [newItem, ...prevItems]);
     reset();
   }
 
-  function handleRemoveItem(key: number) {
+  function handleRemoveItem(id: string) {
     const newPurchaseItemsList = purchaseItemsList.filter(
-      (item) => item.key !== key
+      (item) => item.id !== id
     );
     setPurchaseItemsList(newPurchaseItemsList);
   }
 
   function handleSavePurchase() {
-    saveNewPurchase(clientId, JSON.stringify(purchaseItemsList));
+    saveNewPurchase(clientId, purchaseItemsList);
   }
 
   return (
