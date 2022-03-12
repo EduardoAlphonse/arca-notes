@@ -59,6 +59,7 @@ export function Client() {
 
       if (clientData.purchases) {
         const purchases = Object.values(clientData.purchases);
+        console.log(clientData.purchases);
         setPurchases(purchases);
 
         setTotalPurchases({

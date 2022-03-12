@@ -13,7 +13,7 @@ export function saveNewClient(client: ClientData) {
   });
 }
 
-export function saveNewPurchase(clientId: string, purchase: PurchaseData) {
+export function saveNewPurchase(clientId: string, purchase: string) {
   const newPurchaseRef = push(
     ref(database, 'clients/' + clientId + '/purchases')
   );

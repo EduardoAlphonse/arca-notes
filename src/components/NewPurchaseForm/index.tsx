@@ -50,21 +50,20 @@ export function NewPurchaseForm({
   const { handleSubmit, register, reset } = useForm<FormData>();
 
   function handleAddNewItem(data: FormData) {
-    const newItem = { ...data, key: randomNumber() };
-    console.log(newItem);
+    const newItem = { ...data, id: randomNumber() };
     setPurchaseItemsList((prevItems) => [newItem, ...prevItems]);
     reset();
   }
 
-  function handleRemoveItem(key: number) {
+  function handleRemoveItem(id: string) {
     const newPurchaseItemsList = purchaseItemsList.filter(
-      (item) => item.key !== key
+      (item) => item.id !== id
     );
     setPurchaseItemsList(newPurchaseItemsList);
   }
 
   function handleSavePurchase() {
-    saveNewPurchase(clientId, {});
+    saveNewPurchase(clientId, JSON.stringify(purchaseItemsList));
   }
 
   return (
@@ -114,11 +113,11 @@ export function NewPurchaseForm({
             <ProductsList>
               {purchaseItemsList.map((purchaseItem) => (
                 <ItemList
-                  key={purchaseItem.key}
+                  id={purchaseItem.id}
                   description={purchaseItem.description}
                   quantity={purchaseItem.quantity}
                   value={purchaseItem.value}
-                  onClick={() => handleRemoveItem(purchaseItem.key)}
+                  onClick={() => handleRemoveItem(purchaseItem.id)}
                 />
               ))}
             </ProductsList>
@@ -140,7 +139,7 @@ export function NewPurchaseForm({
               buttonAttrs={{
                 type: 'button',
                 style: { flex: 'unset' },
-                onClick = { handleSavePurchase },
+                onClick: handleSavePurchase,
               }}
             />
           </div>

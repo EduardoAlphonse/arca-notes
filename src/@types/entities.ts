@@ -11,7 +11,7 @@ export type ClientData = {
 };
 
 export type PurchaseData = {
-  id: string;
+  id: number;
   value: number;
   date: string;
   items: ItemType[];

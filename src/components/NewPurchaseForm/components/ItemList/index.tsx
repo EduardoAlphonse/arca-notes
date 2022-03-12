@@ -5,7 +5,7 @@ import { theme } from '../../../../styles/theme';
 import { Container, Quantity, Description, Value, RemoveItem } from './styles';
 
 export type ItemData = ButtonHTMLAttributes<HTMLButtonElement> & {
-  key: number;
+  id: number;
   quantity: string;
   description: string;
   value: string;
