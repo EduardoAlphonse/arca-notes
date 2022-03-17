@@ -46,20 +46,18 @@ export function NewPurchaseForm({
   clientId,
   closeModal,
 }: NewClientFormProps) {
-  const [purchaseItemsList, setPurchaseItemsList] = useState<PurchaseData[]>(
-    []
-  );
+  const [purchaseItemsList, setPurchaseItemsList] = useState<ItemData[]>([]);
 
   const { handleSubmit, register, reset } = useForm<FormData>();
 
   function handleAddNewItem(data: FormData) {
-    const newItem: PurchaseData = {
+    const convertedValue = Number(data.value.replace(',', '.'));
+
+    const newItem: ItemData = {
       id: String(randomNumber()),
-      date: new Date().toString(),
-      value: Number(data.value),
-      items
       quantity: data.quantity,
       description: data.description,
+      value: convertedValue,
     };
 
     setPurchaseItemsList((prevItems) => [newItem, ...prevItems]);
@@ -74,6 +72,8 @@ export function NewPurchaseForm({
   }
 
   function handleSavePurchase() {
+    console.log('clientId', clientId);
+    console.log(purchaseItemsList);
     saveNewPurchase(clientId, purchaseItemsList);
   }
 
@@ -124,11 +124,11 @@ export function NewPurchaseForm({
             <ProductsList>
               {purchaseItemsList.map((purchaseItem) => (
                 <ItemList
-                  key={purchaseItem.key}
+                  key={purchaseItem.id}
                   description={purchaseItem.description}
                   quantity={purchaseItem.quantity}
                   value={purchaseItem.value}
-                  onClick={() => handleRemoveItem(purchaseItem.key)}
+                  onClick={() => handleRemoveItem(purchaseItem.id)}
                 />
               ))}
             </ProductsList>

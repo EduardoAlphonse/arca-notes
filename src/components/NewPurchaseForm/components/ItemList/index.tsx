@@ -5,10 +5,9 @@ import { theme } from '../../../../styles/theme';
 import { Container, Quantity, Description, Value, RemoveItem } from './styles';
 
 export type ItemListProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  key: number;
   quantity: string;
   description: string;
-  value: string;
+  value: number;
 };
 
 export function ItemList({
@@ -17,13 +16,11 @@ export function ItemList({
   value,
   ...rest
 }: ItemListProps) {
-  const convertedValue = Number(value.replace(',', '.'));
-
   return (
     <Container>
       <Quantity>{quantity}</Quantity>
       <Description>{description}</Description>
-      <Value>{convertedValue.toFixed(2)}</Value>
+      <Value>{value.toFixed(2)}</Value>
       <RemoveItem {...rest} type="button">
         <FiTrash size="1.125rem" color={theme.colors.danger.normal} />
       </RemoveItem>

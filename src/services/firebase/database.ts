@@ -1,7 +1,9 @@
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { getDatabase, ref, set, get, push, child } from 'firebase/database';
 import { app } from '.';
 
-import { ClientData, PurchaseData } from '../../@types/entities';
+import { ClientData, ItemData, PurchaseData } from '../../@types/entities';
 
 export const database = getDatabase(app);
 
@@ -13,12 +15,24 @@ export function saveNewClient(client: ClientData) {
   });
 }
 
-export function saveNewPurchase(clientId: string, purchase: PurchaseData[]) {
+export function saveNewPurchase(clientId: string, items: ItemData[]) {
   const newPurchaseRef = push(
     ref(database, 'clients/' + clientId + '/purchases')
   );
+
+  const totalValue = items
+    .map((item) => item.value)
+    .reduce((acc, curr) => acc + curr)
+    .toFixed(2);
+
+  const purchaseDate = format(new Date(), 'dd/MM/yyyy', { locale: ptBR });
+
+  const formattedItems = JSON.stringify(items);
+
   set(newPurchaseRef, {
-    value: purchase,
+    totalValue,
+    purchaseDate,
+    items: formattedItems,
   });
 }
 

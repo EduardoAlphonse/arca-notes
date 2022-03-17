@@ -12,14 +12,14 @@ export type ClientData = {
 
 export type PurchaseData = {
   id: string;
-  value: number;
-  date: string;
+  totalValue: number;
+  purchaseDate: string;
   items: ItemData[];
 };
 
 export type ItemData = {
   id: string;
   description: string;
-  quantity: number;
+  quantity: string;
   value: number;
 };

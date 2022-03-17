@@ -27,6 +27,13 @@ type TotalPurchasesData = {
   totalValue: number;
 };
 
+type PurchaseDataResponse = {
+  id: string;
+  totalValue: string;
+  purchaseDate: string;
+  items: string;
+};
+
 type ClientResponseData = {
   id: string;
   name: string;
@@ -37,7 +44,7 @@ type ClientResponseData = {
   district: string;
   totalDebt: number;
   purchases: {
-    [id: string]: string;
+    [id: string]: PurchaseDataResponse;
   };
 };
 
@@ -69,6 +76,22 @@ export function Client() {
     const unsubscribe = onValue(clientsRef, (snapshot) => {
       const clientResponseData: ClientResponseData = snapshot.val();
 
+      const purchases: PurchaseDataResponse[] = Object.entries(
+        clientResponseData.purchases
+      ).map(([key, value]) => {
+        return {
+          id: key,
+          totalValue: value.totalValue,
+          purchaseDate: value.purchaseDate,
+          items: JSON.parse(value.items),
+        };
+      });
+
+      setClient({
+        ...clientResponseData,
+        purchases,
+      });
+
       if (clientResponseData.purchases) {
         const purchasesStrings = Object.values(clientResponseData.purchases);
 
@@ -80,13 +103,13 @@ export function Client() {
         console.log(purchasesArray);
         setPurchases(purchasesArray);
 
-        const values = purchasesArray.map((item) => item.value);
+        const values = purchasesArray.map((item) => item.totalValue);
         console.log('valuesprice', values);
 
         setTotalPurchases({
           totalPurchases: purchases.length,
           totalValue: purchases
-            .map((item) => item.value)
+            .map((item) => item.totalValue)
             .reduce((prev, curr) => prev + curr),
         });
       }
