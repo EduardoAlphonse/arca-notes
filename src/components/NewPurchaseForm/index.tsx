@@ -26,7 +26,7 @@ import { theme } from '../../styles/theme';
 import { saveNewPurchase } from '../../services/firebase/database';
 
 // import { ItemListProps } from './components/ItemList';
-import { ItemData, PurchaseData } from '../../@types/entities';
+import { ItemData } from '../../@types/entities';
 import { randomNumber } from '../../utils/randomNumber';
 
 type NewClientFormProps = {
@@ -72,9 +72,10 @@ export function NewPurchaseForm({
   }
 
   function handleSavePurchase() {
-    console.log('clientId', clientId);
-    console.log(purchaseItemsList);
     saveNewPurchase(clientId, purchaseItemsList);
+    reset();
+    setPurchaseItemsList([]);
+    closeModal();
   }
 
   return (

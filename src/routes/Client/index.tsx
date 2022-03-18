@@ -14,7 +14,7 @@ import {
 
 import { Title } from '../../components/CommonComponents';
 import { SummaryCard } from '../../components/SummaryCard';
-import { Sale } from './components/Purchase';
+import { Purchase } from './components/Purchase';
 import { NewPurchaseForm } from '../../components/NewPurchaseForm';
 import { Button } from '../../components/Button';
 
@@ -29,7 +29,7 @@ type TotalPurchasesData = {
 
 type PurchaseDataResponse = {
   id: string;
-  totalValue: string;
+  totalValue: number;
   purchaseDate: string;
   items: string;
 };
@@ -51,7 +51,7 @@ type ClientResponseData = {
 export function Client() {
   const [client, setClient] = useState<ClientData>({} as ClientData);
   const [purchases, setPurchases] = useState<PurchaseData[]>([]);
-  const [totalPurchases, setTotalPurchases] = useState<TotalPurchasesData>(
+  const [purchasesSummary, setPurchasesSummary] = useState<TotalPurchasesData>(
     {} as TotalPurchasesData
   );
   const [isNewSaleModalOpen, setIsNewSaleModalOpen] = useState(false);
@@ -76,7 +76,7 @@ export function Client() {
     const unsubscribe = onValue(clientsRef, (snapshot) => {
       const clientResponseData: ClientResponseData = snapshot.val();
 
-      const purchases: PurchaseDataResponse[] = Object.entries(
+      const purchases: PurchaseData[] = Object.entries(
         clientResponseData.purchases
       ).map(([key, value]) => {
         return {
@@ -87,34 +87,21 @@ export function Client() {
         };
       });
 
+      setPurchases(purchases);
+
       setClient({
         ...clientResponseData,
         purchases,
       });
 
-      if (clientResponseData.purchases) {
-        const purchasesStrings = Object.values(clientResponseData.purchases);
+      const summary: TotalPurchasesData = {
+        totalPurchases: purchases.length,
+        totalValue: purchases
+          .map((purchase) => purchase.totalValue)
+          .reduce((acc, curr) => Number(acc) + Number(curr)),
+      };
 
-        console.log('values', purchasesStrings);
-
-        const purchasesArray: PurchaseData[] = purchasesStrings.map((item) =>
-          JSON.parse(item)
-        );
-        console.log(purchasesArray);
-        setPurchases(purchasesArray);
-
-        const values = purchasesArray.map((item) => item.totalValue);
-        console.log('valuesprice', values);
-
-        setTotalPurchases({
-          totalPurchases: purchases.length,
-          totalValue: purchases
-            .map((item) => item.totalValue)
-            .reduce((prev, curr) => prev + curr),
-        });
-      }
-      // const totalPurchases = purchases.reduce((acc, curr) => acc.value + curr.value);
-      // setTotalPurchases();
+      setPurchasesSummary(summary);
     });
 
     return () => unsubscribe();
@@ -136,7 +123,7 @@ export function Client() {
           <PurchaseList>
             {purchases.length > 0 ? (
               purchases.map((purchase) => (
-                <Sale key={purchase.id} data={purchase} />
+                <Purchase key={purchase.id} data={purchase} />
               ))
             ) : (
               <h2>Nenhuma venda registrada</h2>
@@ -149,7 +136,7 @@ export function Client() {
 
           <SummaryCard
             purchasesNumber={purchases.length}
-            purchasesTotalValue={totalPurchases.totalValue}
+            purchasesTotalValue={purchasesSummary.totalValue}
           />
 
           <SummaryFooter>

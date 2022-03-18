@@ -6,12 +6,14 @@ type PurchaseProps = {
   data: PurchaseData;
 };
 
-export function Sale({ data: { value, date, items } }: PurchaseProps) {
+export function Purchase({
+  data: { totalValue, purchaseDate, items },
+}: PurchaseProps) {
   return (
     <StyledPurchase>
       <Header>
-        <TotalValue>R$ {value.toFixed(2)}</TotalValue>
-        <Date>{date}</Date>
+        <TotalValue>R$ {totalValue}</TotalValue>
+        <Date>{purchaseDate}</Date>
       </Header>
 
       <ItemList>

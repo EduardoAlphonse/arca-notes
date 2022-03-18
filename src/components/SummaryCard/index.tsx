@@ -18,7 +18,7 @@ export function SummaryCard({
       <Separator />
       <Data>
         <Text>Total</Text>
-        <Text>R$ {purchasesTotalValue.toFixed(2)}</Text>
+        <Text>R$ {Number(purchasesTotalValue).toFixed(2)}</Text>
       </Data>
     </Container>
   );
