@@ -38,6 +38,11 @@ export function NewClientForm({
     closeModal();
   }
 
+  function handleCloseModal() {
+    reset();
+    closeModal();
+  }
+
   return (
     <Container isVisible={isVisible}>
       <Form onSubmit={handleSubmit(handleSaveNewClient)}>
@@ -108,7 +113,7 @@ export function NewClientForm({
           <div>
             <Button
               title="Cancelar"
-              buttonAttrs={{ onClick: closeModal, type: 'button' }}
+              buttonAttrs={{ onClick: handleCloseModal, type: 'button' }}
               buttonStyle="secondary"
             />
             <Button title="Cadastrar" buttonAttrs={{ type: 'submit' }} />

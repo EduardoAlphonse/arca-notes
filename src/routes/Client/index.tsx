@@ -58,10 +58,6 @@ export function Client() {
 
   const params = useParams<{ clientId: string }>();
 
-  // const purchasesTotalValue = client.purchases
-  //   .map((purchase) => purchase.value)
-  //   .reduce((accumulator, actual) => accumulator + actual);
-
   function handleShowNewSaleModal() {
     setIsNewSaleModalOpen(true);
   }
@@ -76,32 +72,34 @@ export function Client() {
     const unsubscribe = onValue(clientsRef, (snapshot) => {
       const clientResponseData: ClientResponseData = snapshot.val();
 
-      const purchases: PurchaseData[] = Object.entries(
-        clientResponseData.purchases
-      ).map(([key, value]) => {
-        return {
-          id: key,
-          totalValue: value.totalValue,
-          purchaseDate: value.purchaseDate,
-          items: JSON.parse(value.items),
-        };
-      });
+      if (clientResponseData.purchases) {
+        const purchases: PurchaseData[] = Object.entries(
+          clientResponseData.purchases
+        ).map(([key, value]) => {
+          return {
+            id: key,
+            totalValue: value.totalValue,
+            purchaseDate: value.purchaseDate,
+            items: JSON.parse(value.items),
+          };
+        });
 
-      setPurchases(purchases);
+        setPurchases(purchases);
+
+        const summary: TotalPurchasesData = {
+          totalPurchases: purchases.length,
+          totalValue: purchases
+            .map((purchase) => purchase.totalValue)
+            .reduce((acc, curr) => Number(acc) + Number(curr)),
+        };
+
+        setPurchasesSummary(summary);
+      }
 
       setClient({
         ...clientResponseData,
         purchases,
       });
-
-      const summary: TotalPurchasesData = {
-        totalPurchases: purchases.length,
-        totalValue: purchases
-          .map((purchase) => purchase.totalValue)
-          .reduce((acc, curr) => Number(acc) + Number(curr)),
-      };
-
-      setPurchasesSummary(summary);
     });
 
     return () => unsubscribe();

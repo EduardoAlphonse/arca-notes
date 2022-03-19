@@ -3,7 +3,7 @@ import { ptBR } from 'date-fns/locale';
 import { getDatabase, ref, set, get, push, child } from 'firebase/database';
 import { app } from '.';
 
-import { ClientData, ItemData, PurchaseData } from '../../@types/entities';
+import { ClientData, ItemData } from '../../@types/entities';
 
 export const database = getDatabase(app);
 
@@ -22,18 +22,25 @@ export function saveNewPurchase(clientId: string, items: ItemData[]) {
 
   const totalValue = items
     .map((item) => item.value)
-    .reduce((acc, curr) => acc + curr)
-    .toFixed(2);
+    .reduce((acc, curr) => acc + curr);
 
   const purchaseDate = format(new Date(), 'dd/MM/yyyy', { locale: ptBR });
 
   const formattedItems = JSON.stringify(items);
 
   set(newPurchaseRef, {
-    totalValue,
+    totalValue: totalValue.toFixed(2),
     purchaseDate,
     items: formattedItems,
   });
+
+  const totalRef = ref(database, 'clients/' + clientId + '/total');
+
+  get(child(ref(database), 'clients/' + clientId + '/total')).then(
+    (snapshot) => {
+      set(totalRef, snapshot.val() + totalValue);
+    }
+  );
 }
 
 export async function getClients(): Promise<ClientData[]> {

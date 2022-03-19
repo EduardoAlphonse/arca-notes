@@ -69,30 +69,18 @@ export function Home() {
         setClients(formattedClientsArray);
         setFilteredClients(formattedClientsArray);
 
-        const purchasesNumber = formattedClientsArray.length;
+        const purchases = formattedClientsArray.map((item) => item.purchases);
+        console.log(purchases);
+
+        // setTotalPurchases({
+        //   purchasesNumber: purchases.length,
+        //   purchasesTotalValue:
+        // })
       }
     });
 
     return () => unsubscribe();
   }, []);
-
-  // useEffect(() => {
-  //   const purchasesRef = ref(database, 'purchases');
-
-  //   const unsubscribe = onValue(purchasesRef, (snapshot) => {
-  //     if (snapshot.exists()) {
-  //       const purchases: PurchaseData[] = Object.values(snapshot.val());
-  //       const purchasesNumber = purchases.length;
-  //       const purchasesTotalValue = purchases
-  //         .map((purchase) => purchase.value)
-  //         .reduce((prev, curr) => prev + curr);
-
-  //       setTotalPurchases({ purchasesNumber, purchasesTotalValue });
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
 
   return (
     <Container>
