@@ -10,6 +10,7 @@ const theme: DefaultTheme = {
     text: {
       normal: '#3F3F3F',
       light: '#767676',
+      lighter: '#B8B8B8',
     },
     background: {
       light: '#F7F7F7',
@@ -18,6 +19,9 @@ const theme: DefaultTheme = {
       black: '#000000',
       white: '#FFFFFF',
       divider: '#D2D2D2',
+    },
+    danger: {
+      normal: '#DE6060',
     },
   },
   typography: {

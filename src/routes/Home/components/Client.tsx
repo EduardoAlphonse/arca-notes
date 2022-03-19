@@ -4,12 +4,7 @@ import { FiDollarSign } from 'react-icons/fi';
 
 import { Subtitle } from '../../../components/CommonComponents';
 
-export type ClientData = {
-  id: string;
-  name: string;
-  phone: string;
-  address: string;
-};
+import { ClientData } from '../../../@types/entities';
 
 type ClientProps = {
   data: ClientData;

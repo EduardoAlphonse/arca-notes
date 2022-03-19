@@ -1,27 +1,19 @@
 import styled from 'styled-components';
 
-export type PurchaseData = {
-  id: string;
-  clientId: string;
-  value: number;
-  date: string;
-  items: {
-    description: string;
-    quantity: number;
-    value: number;
-  }[];
-};
+import { PurchaseData } from '../../../@types/entities';
 
 type PurchaseProps = {
   data: PurchaseData;
 };
 
-export function Purchase({ data: { value, date, items } }: PurchaseProps) {
+export function Purchase({
+  data: { totalValue, purchaseDate, items },
+}: PurchaseProps) {
   return (
     <StyledPurchase>
       <Header>
-        <TotalValue>R$ {value.toFixed(2)}</TotalValue>
-        <Date>{date}</Date>
+        <TotalValue>R$ {totalValue}</TotalValue>
+        <Date>{purchaseDate}</Date>
       </Header>
 
       <ItemList>

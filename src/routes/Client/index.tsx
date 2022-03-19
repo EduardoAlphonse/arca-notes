@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { onValue, ref } from 'firebase/database';
 
 import {
   Container,
@@ -14,21 +15,52 @@ import {
 import { Title } from '../../components/CommonComponents';
 import { SummaryCard } from '../../components/SummaryCard';
 import { Purchase } from './components/Purchase';
-import { NewClientForm } from '../../components/NewClientForm';
+import { NewPurchaseForm } from '../../components/NewPurchaseForm';
 import { Button } from '../../components/Button';
 
-import { getClient } from '../../database';
+import { database } from '../../services/firebase/database';
+
+import { ClientData, PurchaseData } from '../../@types/entities';
+
+type TotalPurchasesData = {
+  totalPurchases: number;
+  totalValue: number;
+};
+
+type PurchaseDataResponse = {
+  id: string;
+  totalValue: number;
+  purchaseDate: string;
+  items: string;
+};
+
+type ClientResponseData = {
+  id: string;
+  name: string;
+  phone: string;
+  cpf: string;
+  address: string;
+  addressNumber: string;
+  district: string;
+  totalDebt: number;
+  purchases: {
+    [id: string]: PurchaseDataResponse;
+  };
+};
 
 export function Client() {
+  const [client, setClient] = useState<ClientData>({} as ClientData);
+  const [purchases, setPurchases] = useState<PurchaseData[]>([]);
+  const [purchasesSummary, setPurchasesSummary] = useState<TotalPurchasesData>(
+    {} as TotalPurchasesData
+  );
   const [isNewSaleModalOpen, setIsNewSaleModalOpen] = useState(false);
 
   const params = useParams<{ clientId: string }>();
 
-  const client = getClient(params.clientId ?? '');
-
-  const purchasesTotalValue = client.purchases
-    .map((purchase) => purchase.value)
-    .reduce((accumulator, actual) => accumulator + actual);
+  // const purchasesTotalValue = client.purchases
+  //   .map((purchase) => purchase.value)
+  //   .reduce((accumulator, actual) => accumulator + actual);
 
   function handleShowNewSaleModal() {
     setIsNewSaleModalOpen(true);
@@ -37,6 +69,43 @@ export function Client() {
   function handleCloseNewSaleModal() {
     setIsNewSaleModalOpen(false);
   }
+
+  useEffect(() => {
+    const clientsRef = ref(database, 'clients/' + params.clientId);
+
+    const unsubscribe = onValue(clientsRef, (snapshot) => {
+      const clientResponseData: ClientResponseData = snapshot.val();
+
+      const purchases: PurchaseData[] = Object.entries(
+        clientResponseData.purchases
+      ).map(([key, value]) => {
+        return {
+          id: key,
+          totalValue: value.totalValue,
+          purchaseDate: value.purchaseDate,
+          items: JSON.parse(value.items),
+        };
+      });
+
+      setPurchases(purchases);
+
+      setClient({
+        ...clientResponseData,
+        purchases,
+      });
+
+      const summary: TotalPurchasesData = {
+        totalPurchases: purchases.length,
+        totalValue: purchases
+          .map((purchase) => purchase.totalValue)
+          .reduce((acc, curr) => Number(acc) + Number(curr)),
+      };
+
+      setPurchasesSummary(summary);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Container>
@@ -52,9 +121,13 @@ export function Client() {
           </ClientsHeader>
 
           <PurchaseList>
-            {client.purchases.map((purchaseData) => (
-              <Purchase key={purchaseData.id} data={purchaseData} />
-            ))}
+            {purchases.length > 0 ? (
+              purchases.map((purchase) => (
+                <Purchase key={purchase.id} data={purchase} />
+              ))
+            ) : (
+              <h2>Nenhuma venda registrada</h2>
+            )}
           </PurchaseList>
         </Clients>
 
@@ -62,8 +135,8 @@ export function Client() {
           <Title>Resumo</Title>
 
           <SummaryCard
-            sales={client.purchases.length}
-            total={purchasesTotalValue}
+            purchasesNumber={purchases.length}
+            purchasesTotalValue={purchasesSummary.totalValue}
           />
 
           <SummaryFooter>
@@ -76,7 +149,8 @@ export function Client() {
         </Summary>
       </Content>
 
-      <NewClientForm
+      <NewPurchaseForm
+        clientId={params.clientId || ''}
         isVisible={isNewSaleModalOpen}
         closeModal={handleCloseNewSaleModal}
       />

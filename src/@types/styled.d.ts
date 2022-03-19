@@ -12,6 +12,7 @@ declare module 'styled-components' {
       text: {
         normal: string;
         light: string;
+        lighter: string;
       };
 
       background: {
@@ -22,6 +23,10 @@ declare module 'styled-components' {
         black: string;
         white: string;
         divider: string;
+      };
+
+      danger: {
+        normal: string;
       };
     };
 

@@ -23,6 +23,7 @@ export const Container = styled.button<{
 
   span {
     flex: 1;
+    padding: 0 2rem;
     font: ${({ theme }) => theme.typography.button};
     color: ${({ theme, buttonStyle }) =>
       buttonStyle === 'primary'

@@ -38,6 +38,7 @@ export const Form = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 46rem;
   gap: 1.5rem;
   padding: 2rem;
   background-color: ${({ theme }) => theme.colors.background.light};
@@ -45,11 +46,22 @@ export const Form = styled.form`
 
   box-shadow: 0px 58px 52px -31px rgba(0, 0, 0, 0.25);
 
-  input {
-    text-align: left;
-  }
-
   animation: ${slideUp} 300ms forwards;
+`;
+
+export const FormHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    font-size: 0;
+    background: none;
+    border: none;
+    padding: 0.25rem;
+
+    cursor: pointer;
+  }
 `;
 
 export const FormFields = styled.div`
@@ -61,10 +73,12 @@ export const Section = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  height: 15.9rem;
   gap: 0.75rem;
 
   > div {
     display: flex;
+    flex: 1;
     gap: 0.75rem;
   }
 `;
@@ -80,6 +94,12 @@ export const Separator = styled.div`
   margin: 2.5rem 0;
 `;
 
+export const ProductsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+`;
+
 export const FormOptions = styled.div`
   display: flex;
   gap: 1.5rem;
@@ -89,9 +109,43 @@ export const FormOptions = styled.div`
     flex: 1;
     gap: 1.5rem;
 
+    justify-content: space-between;
+
     button {
       min-width: 0px;
       flex: 1;
     }
   }
+`;
+
+export const LabeledInput = styled.label`
+  width: 100%;
+
+  input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid ${({ theme }) => theme.colors.common.white};
+    border-radius: ${({ theme }) => theme.shapes.borderRadius};
+
+    font: ${({ theme }) => theme.typography.text};
+    color: ${({ theme }) => theme.colors.common.black};
+    text-align: left;
+
+    outline: none;
+    transition: 300ms;
+
+    &:focus {
+      border-color: ${({ theme }) => theme.colors.primary.normal};
+    }
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.text.lighter};
+    }
+  }
+`;
+
+export const Label = styled.p`
+  font: ${({ theme }) => theme.typography.textSmall};
+  color: ${({ theme }) => theme.colors.text.normal};
+  margin-bottom: 6px;
 `;

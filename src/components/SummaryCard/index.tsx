@@ -1,21 +1,24 @@
 import { Container, Data, Text, Separator } from './styles';
 
-type SummaryCardProps = {
-  sales: number;
-  total: number;
+export type SummaryCardProps = {
+  purchasesNumber: number;
+  purchasesTotalValue: number;
 };
 
-export function SummaryCard({ sales, total }: SummaryCardProps) {
+export function SummaryCard({
+  purchasesNumber = 0,
+  purchasesTotalValue = 0,
+}: SummaryCardProps) {
   return (
     <Container>
       <Data>
         <Text>Vendas</Text>
-        <Text>{sales}</Text>
+        <Text>{purchasesNumber}</Text>
       </Data>
       <Separator />
       <Data>
         <Text>Total</Text>
-        <Text>R$ {total.toFixed(2)}</Text>
+        <Text>R$ {Number(purchasesTotalValue).toFixed(2)}</Text>
       </Data>
     </Container>
   );
