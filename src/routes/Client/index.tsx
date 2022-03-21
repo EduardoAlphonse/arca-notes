@@ -133,7 +133,7 @@ export function Client() {
           <Title>Resumo</Title>
 
           <SummaryCard
-            purchasesNumber={purchases.length}
+            purchasesNumber={purchasesSummary.totalPurchases}
             purchasesTotalValue={purchasesSummary.totalValue}
           />
 
